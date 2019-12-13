@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>801</width>
-    <height>421</height>
+    <height>419</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -79,7 +79,7 @@
        </size>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="tab_1">
        <attribute name="title">
@@ -1433,6 +1433,21 @@
           </layout>
          </item>
         </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>页</string>
+       </attribute>
+       <widget class="QTextBrowser" name="Press_2">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>71</width>
+          <height>341</height>
+         </rect>
+        </property>
        </widget>
       </widget>
      </widget>

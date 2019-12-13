@@ -556,7 +556,7 @@ void E300::on_E300_start_clicked()
 
 	ui.DiagInfoSW_short->setStyleSheet(off_led);
 	ui.DiagInfoSW_long->setStyleSheet(off_led);
-	DIDdiagnose();
+	//DIDdiagnose();
 	E300time->start();
 
 }
@@ -576,7 +576,7 @@ void E300::DIDdiagnose()
 	ui.DIDSW->clear();
 	if (!connectflag)
 	{
-		Display("请连接硬件");
+		Display(u8"请连接硬件");
 		return;
 	}
 	buf[0] = 0x21;
@@ -584,17 +584,15 @@ void E300::DIDdiagnose()
 	buf[2] = 0x22;
 	buf[3] = 0xFF;
 	buf[4] = 0x00;
-	Sleep(10);
+	WriteHead(0);
+	Sleep(100);//唤醒
 	Write3C(buf);
 	Sleep(10);
 	ReadMsg();
-	Sleep(30);
-	do 
-	{
-		Write3DHead();
-		Sleep(10);
-		ReadMsg(buf);
-	} while (buf[0] != 0x21);
+	Sleep(10);
+	Write3DHead();
+	Sleep(10);
+	ReadMsg(buf);
 	for (int i = 0; i < 2; i++)
 	{
 		str.append(buf[6 + i]);
@@ -663,7 +661,6 @@ void E300::DIDdiagnose()
 		}
 	}
 	ui.DIDHW->setText(str);
-
 }
 
 void E300::on_timer_timeout()
@@ -671,6 +668,8 @@ void E300::on_timer_timeout()
 	UINT8 Menu, Mode, ADAS, Answer, Speech, DIST, RESPlus, Crusie, SETReduce, Return, \
 		Up, Down, SeekReduce, OK, SeekPlus, VolPlus, Mute, VolReduce, DiagInfoSW;
 	uint8_t buf[8] = {0};
+	short int temp;
+	QString str;
 	WriteHead(0x19);
 	Sleep(10);
 	ReadMsg(buf);
@@ -832,6 +831,17 @@ void E300::on_timer_timeout()
 	case 2:ui.DiagInfoSW_short->setStyleSheet(off_led); ui.DiagInfoSW_long->setStyleSheet(on_led); break;
 	case 3:ui.DiagInfoSW_short->setStyleSheet(on_led); ui.DiagInfoSW_long->setStyleSheet(off_led); break;
 	}
+	DIDdiagnose();
+	//WriteHead(0x20);
+	//Sleep(10);
+	//ReadMsg(buf);
+	//temp = (int)buf[0] << 8 | buf[1];
+	//temp >>= 4;
+	//if (temp & 0x800)
+	//{
+	//	temp |= 0xF000;
+	//}
+	//ui.textBrowser_2->append(QString::number(temp));
 }
 
 
